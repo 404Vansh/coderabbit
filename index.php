@@ -1,4 +1,8 @@
 <?php
+function getRandomElement(array $arr): string {
+    return $arr[array_rand($arr)];
+}
+
 $quotes = [
     "The best way to get started is to quit talking and begin doing.",
     "Don’t let yesterday take up too much of today.",
@@ -7,8 +11,17 @@ $quotes = [
     "You learn more from failure than from success."
 ];
 
-$colors = ["Red", "Green", "Blue", "Yellow", "Orange", "Purple"];
+$colors = [
+    "Red" => "#FF4C4C",
+    "Green" => "#4CAF50",
+    "Blue" => "#2196F3",
+    "Yellow" => "#FFEB3B",
+    "Orange" => "#FF9800",
+    "Purple" => "#9C27B0"
+];
+
 $emojis = ["😀", "🚀", "🌟", "🔥", "🎉", "🍕", "🐱", "🏖️"];
+
 $randomFacts = [
     "Honey never spoils.",
     "Octopuses have three hearts.",
@@ -17,48 +30,73 @@ $randomFacts = [
     "The Eiffel Tower can grow taller in summer."
 ];
 
-// Random selections
-$randomQuote = $quotes[array_rand($quotes)];
-$randomColor = $colors[array_rand($colors)];
-$randomEmoji = $emojis[array_rand($emojis)];
-$randomFact = $randomFacts[array_rand($randomFacts)];
-$randomNumber = rand(1, 1000);
+// Final random data pack
+$data = [
+    'quote' => getRandomElement($quotes),
+    'colorName' => array_rand($colors),
+    'emoji' => getRandomElement($emojis),
+    'fact' => getRandomElement($randomFacts),
+    'number' => rand(1, 1000),
+    'time' => date("F j, Y, g:i a")
+];
+
+$colorHex = $colors[$data['colorName']];
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Random Things</title>
+    <meta charset="UTF-8">
+    <title>🌈 Random Fun Generator</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f3f3;
-            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, <?= $colorHex ?>, #ffffff);
+            transition: background 1s ease;
+            padding: 40px;
+            margin: 0;
         }
         .card {
             background: white;
-            border-radius: 10px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-            padding: 20px;
-            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            padding: 30px;
+            max-width: 700px;
             margin: auto;
+            animation: fadeIn 1s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         h1 {
-            color: #333;
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
         }
         .section {
+            font-size: 1.2em;
             margin-bottom: 15px;
+        }
+        .emoji {
+            font-size: 2em;
+        }
+        .footer {
+            text-align: center;
+            font-style: italic;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>Random Stuff Generator</h1>
-        <div class="section"><strong>Random Quote:</strong> <?= $randomQuote ?></div>
-        <div class="section"><strong>Random Number:</strong> <?= $randomNumber ?></div>
-        <div class="section"><strong>Random Color:</strong> <?= $randomColor ?></div>
-        <div class="section"><strong>Random Emoji:</strong> <?= $randomEmoji ?></div>
-        <div class="section"><strong>Random Fact:</strong> <?= $randomFact ?></div>
-        <div class="section"><em>Refresh the page to see new random content!</em></div>
+        <h1><?= $data['emoji'] ?> Random Fun Generator</h1>
+        <div class="section"><strong>Quote:</strong> <?= $data['quote'] ?></div>
+        <div class="section"><strong>Lucky Number:</strong> <?= $data['number'] ?></div>
+        <div class="section"><strong>Today's Color:</strong> <?= $data['colorName'] ?> <span style="color: <?= $colorHex ?>;">■</span></div>
+        <div class="section"><strong>Did you know?</strong> <?= $data['fact'] ?></div>
+        <div class="footer">Last generated on <?= $data['time'] ?> — Refresh for more!</div>
     </div>
 </body>
 </html>
