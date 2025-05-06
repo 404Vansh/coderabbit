@@ -47,7 +47,7 @@ $colorHex = $colors[$data['colorName']];
 <head>
     <meta charset="UTF-8">
     <title>🌈 Random Fun Generator</title>
-    <style>
+    <style
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(to right, <?= $colorHex ?>, #ffffff);
